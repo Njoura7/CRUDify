@@ -33,6 +33,16 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      // Customize `no-unused-vars` to mark unused variables with a specific pattern as transparent
+      'no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: true,
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 ]
