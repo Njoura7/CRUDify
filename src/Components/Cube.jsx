@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { OrbitControls } from '@react-three/drei'
-const Cube = () => {
+export const Cube = () => {
   return (
     <>
       <OrbitControls />
@@ -11,5 +11,3 @@ const Cube = () => {
     </>
   )
 }
-
-export default Cube
