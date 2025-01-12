@@ -1,8 +1,10 @@
 import { Canvas } from '@react-three/fiber'
-import { Cube } from '../src/Components/Cube'
-import { Input } from '../src/Components/Input'
+import { Cube } from '@/Components/Cube'
+import { Input } from '@/Components/Input'
 
 import './App.css'
+import { Client } from '@/Components/Client'
+import { Server } from '@/Components/Server'
 
 function App() {
   return (
@@ -12,7 +14,9 @@ function App() {
           <Cube />
         </Canvas>
       </div>
+      <Client />
       <Input />
+      <Server />
     </div>
   )
 }
