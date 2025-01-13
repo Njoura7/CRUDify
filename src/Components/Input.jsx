@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import api from '../axios'
+import { Flex } from '@chakra-ui/react'
+import { Input } from '@chakra-ui/react'
+import { Field } from '@/components/ui/field'
 
-export const Input = () => {
+export const UserInput = () => {
   const [users, setUsers] = useState([])
 
   const fetchUsers = async () => {
@@ -54,8 +57,10 @@ export const Input = () => {
 
   return (
     <>
-      <button onClick={fetchUsers}>Get all users</button>
-      <button onClick={() => setUsers([])}>Hide users</button>
+      <Flex>
+        <button onClick={fetchUsers}>Get all users</button>
+        <button onClick={() => setUsers([])}>Hide users</button>
+      </Flex>
       <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
         {users.length > 0 ? (
           users.map((user, index) => (
@@ -69,33 +74,46 @@ export const Input = () => {
             </div>
           ))
         ) : (
-          <p className='text-gray-500'>No users found</p>
+          <p className='text-gray-400 m-4'>No users found</p>
         )}
       </div>
 
       <form
-        className='p-4 border-2 border-indigo-600 flex flex-col'
+        className='w-3/4 p-4 border-2 border-indigo-600'
         onSubmit={handleSubmit}
       >
-        <div className='m-6'>
-          <label>
-            username
-            <input className='m-2 p-2' name='username' />
-          </label>
-        </div>
-        <div className='m-6'>
-          <label>
-            age
-            <input className='m-2 p-2' name='age' />
-          </label>
-        </div>
-        <div className='m-6'>
-          <label>
-            color
-            <input className='m-2 p-2' name='color' />
-          </label>
-        </div>
-        <button>Add a user</button>
+        <Flex
+          direction='column'
+          align='center'
+          justify='flex-start'
+          rounded='md'
+        >
+          <Field label='username'>
+            <Input
+              name='username'
+              border='1px #123 solid'
+              placeholder='enter username'
+            />
+          </Field>
+
+          <Field label='age'>
+            <Input
+              name='age'
+              border='1px #123 solid'
+              placeholder='enter age'
+            />
+          </Field>
+
+          <Field label='color'>
+            <Input
+              name='color'
+              border='1px #123 solid'
+              placeholder='enter favorite color'
+            />
+          </Field>
+
+          <button>Add a user</button>
+        </Flex>
       </form>
     </>
   )
