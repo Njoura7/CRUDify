@@ -9,6 +9,7 @@ export const Client = () => {
       bg='#075'
       width='160'
       height='160'
+      p='4'
       color='white'
       shadow='md'
       borderRadius='md'

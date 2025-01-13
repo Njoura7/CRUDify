@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import { Box, Flex, Table } from '@chakra-ui/react'
 import { HiPlus } from 'react-icons/hi'
 import { Tag } from '@/Components/ui/tag'

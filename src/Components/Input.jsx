@@ -1,15 +1,45 @@
 import { useState } from 'react'
 import api from '../axios'
+import { useForm } from 'react-hook-form'
 import { Flex } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Field } from '@/components/ui/field'
+import { toaster } from '@/components/ui/toaster'
 
 export const UserInput = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm()
   const [users, setUsers] = useState([])
+  const [loadingUsers, setLoadingUsers] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const fetchUsers = async () => {
+    if (loadingUsers) return
+    // start the loading status
+    setLoadingUsers(true)
+
+    // Define the axios request as a promise
+    const fetchPromise = api.get('/')
+    toaster.promise(fetchPromise, {
+      loading: {
+        title: 'Loading users...',
+        description: 'Please wait while we fetch the user list.',
+      },
+      success: {
+        title: 'Users loaded!',
+        description: 'The user list has been successfully fetched.',
+      },
+      error: {
+        title: 'Failed to load users',
+        description: 'An error occurred while fetching the users.',
+      },
+    })
     try {
-      const response = await api.get('/')
+      const response = await fetchPromise
       setUsers(response.data)
       console.log(response.data)
     } catch (err) {
@@ -21,46 +51,108 @@ export const UserInput = () => {
       } else {
         console.log(`Error: ${err.message}`)
       }
+    } finally {
+      setLoadingUsers(false)
     }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const formData = {
-      name: e.target.username.value,
-      age: e.target.age.value,
-      color: e.target.color.value,
-    }
+  const onSubmit = async (data) => {
+    if (loading) return
+    // start the loading status
+    setLoading(true)
 
-    if (!formData.name) {
-      alert('Name is required!')
-      return
-    }
-
+    const addUserPromise = api.post('/', data)
+    toaster.promise(addUserPromise, {
+      loading: {
+        title: 'Adding user...',
+        description: 'Please wait while we add the user.',
+      },
+      success: {
+        title: 'User added!',
+        description: 'The user has been successfully added.',
+      },
+      error: {
+        title: 'Failed to add the user',
+        description: 'An error occurred while adding the user.',
+      },
+    })
     try {
-      const response = await api.post('/', formData)
+      const response = await addUserPromise
       console.log('User created:', response.data)
-
-      // Clear the input fields after successful creation
-      e.target.username.value = ''
-      e.target.age.value = ''
-      e.target.color.value = ''
-
-      // Use setTimeout to delay the alert to ensure fields are cleared first
-      setTimeout(() => {
-        alert('User added')
-      }, 10) // The timeout is set to 0 to ensure it's executed after the clearing action
+      reset()
     } catch (error) {
-      console.error('Error:', error.response.data)
+      console.error('Error:', error.response?.data || error.message)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <>
       <Flex>
-        <button onClick={fetchUsers}>Get all users</button>
+        <button disabled={loadingUsers} onClick={fetchUsers}>
+          {loadingUsers ? 'loading users..' : 'Get All users'}
+        </button>
         <button onClick={() => setUsers([])}>Hide users</button>
       </Flex>
+
+      {/* User Form */}
+      <form
+        className='w-2/3 p-4 border-2 border-indigo-600'
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Flex
+          direction='column'
+          align='center'
+          justify='flex-start'
+          rounded='md'
+        >
+          <Field label='username'>
+            <Input
+              {...register('name', { required: 'Name is required!' })}
+              p='2'
+              border='1px #123 solid'
+              placeholder='enter username'
+            />
+            {errors.name && (
+              <p
+                style={{
+                  color: '#e14',
+                  backgroundColor: '#bbb',
+                  padding: '5px',
+                  borderRadius: '5px',
+                }}
+              >
+                {errors.name.message}
+              </p>
+            )}
+          </Field>
+
+          <Field label='age'>
+            <Input
+              // defaultValue={10}
+              {...register('age')}
+              p='2'
+              border='1px #123 solid'
+              placeholder='enter age'
+            />
+          </Field>
+
+          <Field label='color'>
+            <Input
+              {...register('color')}
+              p='2'
+              border='1px #123 solid'
+              placeholder='enter favorite color'
+            />
+          </Field>
+
+          <button disabled={loading}>
+            {loading ? 'Adding..' : 'Add a user'}
+          </button>
+        </Flex>
+      </form>
+      {/* Users rendering */}
       <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
         {users.length > 0 ? (
           users.map((user, index) => (
@@ -77,44 +169,6 @@ export const UserInput = () => {
           <p className='text-gray-400 m-4'>No users found</p>
         )}
       </div>
-
-      <form
-        className='w-3/4 p-4 border-2 border-indigo-600'
-        onSubmit={handleSubmit}
-      >
-        <Flex
-          direction='column'
-          align='center'
-          justify='flex-start'
-          rounded='md'
-        >
-          <Field label='username'>
-            <Input
-              name='username'
-              border='1px #123 solid'
-              placeholder='enter username'
-            />
-          </Field>
-
-          <Field label='age'>
-            <Input
-              name='age'
-              border='1px #123 solid'
-              placeholder='enter age'
-            />
-          </Field>
-
-          <Field label='color'>
-            <Input
-              name='color'
-              border='1px #123 solid'
-              placeholder='enter favorite color'
-            />
-          </Field>
-
-          <button>Add a user</button>
-        </Flex>
-      </form>
     </>
   )
 }
