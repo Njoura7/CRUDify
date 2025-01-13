@@ -1,19 +1,22 @@
 import { Button } from '@/components/ui/button'
 import { Box, Flex, Table } from '@chakra-ui/react'
+import { HiPlus } from 'react-icons/hi'
+import { Tag } from '@/Components/ui/tag'
 
 export const Db = () => {
   return (
     <Box
       bg='#50a'
       w='100%'
-      p='4'
       m='4'
       color='white'
       shadow='md'
       borderRadius='md'
     >
-      <Flex direction='column' justify='center' gap='4'>
-        <Button>Database</Button>
+      <Tag startElement={<HiPlus />} colorPalette='orange' size='lg'>
+        Database
+      </Tag>
+      <Flex direction='column' justify='center' p='4'>
         <Table.Root size='sm'>
           <Table.Header>
             <Table.Row>

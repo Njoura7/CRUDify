@@ -1,25 +1,24 @@
-import { Button } from '@/components/ui/button'
+import { HiPlus } from 'react-icons/hi'
 import { Box, Flex } from '@chakra-ui/react'
 import { UserInput } from '@/Components/Input'
+import { Tag } from '@/Components/ui/tag'
 
 export const Client = () => {
   return (
-    <Flex justify='center' gap='4'>
-      <Box
-        bg='#075'
-        width='160'
-        height='160'
-        color='white'
-        shadow='md'
-        borderRadius='md'
-        display='flex'
-        flexDirection='column'
-        justifyContent='center'
-        alignItems='center'
-      >
-        <Button>Frontend</Button>
+    <Box
+      bg='#075'
+      width='160'
+      height='160'
+      color='white'
+      shadow='md'
+      borderRadius='md'
+    >
+      <Tag startElement={<HiPlus />} colorPalette='teal' size='lg'>
+        Frontend
+      </Tag>
+      <Flex justify='center' align='center' flexDirection='column' gap='4'>
         <UserInput />
-      </Box>
-    </Flex>
+      </Flex>
+    </Box>
   )
 }

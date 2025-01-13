@@ -1,8 +1,7 @@
 import './App.css'
-import { Canvas } from '@react-three/fiber'
-import { Cube } from '@/Components/Cube'
+// import { Canvas } from '@react-three/fiber'
+// import { Cube } from '@/Components/Cube'
 
-import { UserInput } from '@/Components/Input'
 import { Client } from '@/Components/Client'
 import { Server } from '@/Components/Server'
 import { Db } from '@/Components/Db'
