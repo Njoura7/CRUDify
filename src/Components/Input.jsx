@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Flex } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Field } from '@/components/ui/field'
+import { Button } from '@/components/ui/button'
 import { toaster } from '@/components/ui/toaster'
 
 export const UserInput = () => {
@@ -90,10 +91,10 @@ export const UserInput = () => {
   return (
     <>
       <Flex>
-        <button disabled={loadingUsers} onClick={fetchUsers}>
+        <Button disabled={loadingUsers} onClick={fetchUsers}>
           {loadingUsers ? 'loading users..' : 'Get All users'}
-        </button>
-        <button onClick={() => setUsers([])}>Hide users</button>
+        </Button>
+        <Button onClick={() => setUsers([])}>Hide users</Button>
       </Flex>
 
       {/* User Form */}

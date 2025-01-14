@@ -17,7 +17,11 @@ function App() {
       </div> */}
       <Client />
 
-      <Flex className='border-2 border-red-500' justify='space-between'>
+      <Flex
+        flexDirection='column'
+        md={{ flexDirection: 'row' }}
+        className='border-2 border-red-500'
+      >
         <Server />
         <Db />
       </Flex>

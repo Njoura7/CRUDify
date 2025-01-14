@@ -1,23 +1,23 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Flex, Card } from '@chakra-ui/react'
 import { Tag } from '@/Components/ui/tag'
 import { HiPlus } from 'react-icons/hi'
 
 export const Server = () => {
   return (
-    <Box
-      bg='#023'
-      w='100%'
-      m='4'
-      color='white'
-      shadow='md'
-      borderRadius='md'
-    >
-      <Tag startElement={<HiPlus />} colorPalette='gray' size='lg'>
-        Backend
-      </Tag>
-      <Flex justify='center' gap='4'>
-        {/* //todo: content goes here */}
-      </Flex>
-    </Box>
+    <Card.Root w='full' bg='#023' m='4' shadow='md' borderRadius='md'>
+      <Card.Body p='0'>
+        <Tag
+          startElement={<HiPlus />}
+          colorPalette='gray'
+          size='lg'
+          maxW='6rem'
+        >
+          Backend
+        </Tag>
+        <Flex justify='center' gap='4' p='3'>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+        </Flex>
+      </Card.Body>
+    </Card.Root>
   )
 }
